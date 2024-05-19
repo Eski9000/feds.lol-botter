@@ -1,7 +1,9 @@
 import requests
 from bs4 import BeautifulSoup
 import threading
+import os
 
+os.system('title .gg/krush & cls')
 def scrape_proxies():
     url = "https://api.proxyscrape.com/v2/?request=getproxies&protocol=http&timeout=10000&country=all&ssl=all&anonymity=all"
     response = requests.get(url)
@@ -16,9 +18,9 @@ def check_proxy(proxy, valid_proxies):
             print(f"\033[92mValid proxy found: {proxy}\033[0m")
             valid_proxies.append(proxy)
     except:
-        pass
+        print(f"\033[91mInvalid proxy: {proxy}\033[0m")
 
-def check_proxies_and_start_view_bot(biolink):
+def checkandstart(biolink):
     valid_proxies = []
     proxies = scrape_proxies()
 
@@ -38,13 +40,13 @@ def check_proxies_and_start_view_bot(biolink):
         print("\033[91mNo valid proxies found.\033[0m")
 
 def make_request_with_proxy(proxy, biolink):
-
     headers = {
         'accept': '*/*',
         'accept-language': 'en-US,en;q=0.9',
         'content-type': 'application/json',
         'origin': 'https://feds.lol',
         'priority': 'u=1, i',
+        'referer': 'https://feds.lol/luxury',
         'sec-ch-ua': '"Chromium";v="124", "Google Chrome";v="124", "Not-A.Brand";v="99"',
         'sec-ch-ua-mobile': '?0',
         'sec-ch-ua-platform': '"Windows"',
@@ -67,7 +69,7 @@ def make_request_with_proxy(proxy, biolink):
         
         print(f"\033[92mSent view > {biolink} with {proxy}\033[0m")
     except:
-        pass
+        print(f"\033[91mFailed to send view > {biolink} with {proxy}\033[0m")
 
 def start_view_bot(valid_proxies, biolink):
     threads = []
@@ -81,6 +83,4 @@ def start_view_bot(valid_proxies, biolink):
 
 biolink = input('\033[94mUser > \033[0m')
 
-check_proxies_and_start_view_bot(biolink)
-
-# discord.gg/krush fr fr 
+checkandstart(biolink)
